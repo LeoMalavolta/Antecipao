@@ -1,0 +1,6 @@
+@Antecipação_de_Recebível_HostAddress = http://localhost:5098
+
+GET {{Antecipação_de_Recebível_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
