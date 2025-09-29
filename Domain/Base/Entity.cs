@@ -4,19 +4,23 @@
     {
         public Guid Id { get; set; }
         public DateTime DataCriacao { get; set; }
-        public bool Excluido{ get; set; }
+        public DateTime DataAtualizacao { get; set; }
         public DateTime? DataExclusao { get; set; }
 
         protected Entity()
         {
             Id = Guid.NewGuid();
+            DataAtualizacao = DateTime.UtcNow;
             DataCriacao = DateTime.UtcNow;
-            Excluido = false;
+        }
+
+        public virtual void Atualizar()
+        {
+            DataAtualizacao = DateTime.UtcNow;
         }
 
         public virtual void Excluir()
         {
-            Excluido = true;
             DataExclusao = DateTime.UtcNow;
         }
     }

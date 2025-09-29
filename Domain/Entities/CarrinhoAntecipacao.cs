@@ -8,29 +8,47 @@ namespace Antecipacao.Domain.Entities
         public decimal ValorTotalBruto { get; private set; }
         public decimal ValorTotalLiquido { get; private set; }
         public ICollection<NotaFiscal> NotasFiscais { get; private set; }
-        public bool Antecipado { get; private set; }
         public DateTime? DataAntecipacao { get; private set; }
 
-        private CarrinhoAntecipacao(Guid idEmpresa, decimal valorTotalBruto, decimal valorTotalLiquido, IEnumerable<NotaFiscal> notasFiscais)
+        protected CarrinhoAntecipacao() { } 
+
+        public CarrinhoAntecipacao(Guid idEmpresa, decimal valorTotalBruto, decimal valorTotalLiquido)
         {
-            IdEmpresa = idEmpresa;
-            ValorTotalBruto = valorTotalBruto;
-            ValorTotalLiquido = valorTotalLiquido;
-            NotasFiscais = notasFiscais.ToList();
+            AlterarEmpresa(idEmpresa);
+            AlterarValorTotalBruto(valorTotalBruto);
+            AlterarValorTotalLiquido(valorTotalLiquido);
         }
 
-        public static CarrinhoAntecipacao Criar(Guid empresaId, decimal valorTotalBruto, decimal valorTotalLiquido, ICollection<NotaFiscal> notaFiscals)
+        public void AlterarEmpresa(Guid empresaId)
         {
             if (empresaId == Guid.Empty)
-                throw new ArgumentException("EmpresaId é obrigatório.");
+                throw new ArgumentException("Empresa é obrigatório.");
 
+            IdEmpresa = empresaId;
+        }
+
+        public void AlterarValorTotalBruto(decimal valorTotalBruto)
+        {
             if (valorTotalBruto <= 0)
                 throw new ArgumentException("Valor antecipado deve ser maior que zero.");
 
+            ValorTotalBruto = valorTotalBruto;
+        }
+
+        public void AlterarValorTotalLiquido(decimal valorTotalLiquido)
+        {
             if (valorTotalLiquido <= 0)
                 throw new ArgumentException("Valor antecipado deve ser maior que zero.");
 
-            return new CarrinhoAntecipacao(empresaId, valorTotalBruto, valorTotalLiquido, notaFiscals);
+            ValorTotalLiquido = valorTotalLiquido;
+        }
+
+        public void DefinirDataAntecipacao(DateTime dataAntecipacao)
+        {
+            if (dataAntecipacao < DateTime.UtcNow)
+                throw new ArgumentException("Data de antecipação não pode ser no passado.");
+
+            DataAntecipacao = dataAntecipacao;
         }
     }
 }

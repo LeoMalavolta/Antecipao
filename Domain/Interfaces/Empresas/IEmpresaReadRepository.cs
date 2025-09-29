@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Antecipacao.Application.Empresas.Criar
+namespace Antecipacao.Domain.Interfaces.Empresas
 {
-    internal class CriarEmpresaCommandHandler
+    public interface IEmpresaReadRepository
     {
     }
 }

@@ -1,4 +1,6 @@
+using Antecipacao.Domain.Interfaces.Empresas;
 using Antecipacao.Infrastructure.Data;
+using Antecipacao.Infrastructure.Repositories.Empresas;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -11,7 +13,12 @@ builder.Services.AddDbContext<AntecipacaoDeRecebiveisDbContext>(options =>
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+builder.Services.AddScoped<IEmpresaWriteRepository, EmpresaWriteRepository>();
+builder.Services.AddScoped<IEmpresaReadRepository, EmpresaReadRepository>();
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
