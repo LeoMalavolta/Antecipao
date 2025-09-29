@@ -4,14 +4,14 @@ namespace Antecipacao.Domain.Entities
 {
     public class NotaFiscal : Entity
     {
-        public Guid IdCarrinho { get; private set; }
+        public Guid? IdCarrinho { get; private set; }
         public string Numero { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime DataVencimento { get; private set; }
 
         protected NotaFiscal() { }
 
-        public NotaFiscal(Guid idCarrinho, string numero, decimal valor, DateTime dataVencimento)
+        public NotaFiscal(Guid? idCarrinho, string numero, decimal valor, DateTime dataVencimento)
         {
             AlterarCarrinho(idCarrinho);
             AlterarNumero(numero);
@@ -19,7 +19,7 @@ namespace Antecipacao.Domain.Entities
             AlterarDataVencimento(dataVencimento);
         }
 
-        public void AlterarCarrinho(Guid idCarrinho)
+        public void AlterarCarrinho(Guid? idCarrinho)
         {
             if (idCarrinho == Guid.Empty)
                 throw new ArgumentException("IdCarrinho é obrigatório.");

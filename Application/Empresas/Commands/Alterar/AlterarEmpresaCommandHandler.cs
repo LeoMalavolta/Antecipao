@@ -17,7 +17,7 @@ namespace Antecipacao.Application.Empresas.Commands.Alterar
         public async Task<DomainResponse<bool>> Handle(AlterarEmpresaCommand request, CancellationToken cancellationToken)
         {
             if (request.id == Guid.Empty)
-                return DomainResponse<bool>.Falied("Não foi possivel alterar a Empresa!", HttpStatusCode.NoContent);
+                return DomainResponse<bool>.Falied("Não foi possivel alterar a Empresa!", HttpStatusCode.BadRequest);
 
             var empresa = await _repository.GetById(request.id);
             if (empresa is null)
@@ -31,7 +31,7 @@ namespace Antecipacao.Application.Empresas.Commands.Alterar
             if (!result)
                 return DomainResponse<bool>.Falied("Não foi possivel alterar a Empresa!", HttpStatusCode.BadRequest);
 
-            return DomainResponse<bool>.Created("Empresa excluida com sucesso!", HttpStatusCode.Created);
+            return DomainResponse<bool>.Created("Empresa alterada com sucesso!", HttpStatusCode.NoContent);
         }
     }
 }

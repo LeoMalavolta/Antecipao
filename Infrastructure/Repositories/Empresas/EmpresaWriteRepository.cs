@@ -18,7 +18,6 @@ namespace Antecipacao.Infrastructure.Repositories.Empresas
         {
             await _context.Empresas.AddAsync(entity);
             return await _context.SaveChangesAsync() > 0;
-
         }
 
         public async Task<bool> Update(Empresa entity)

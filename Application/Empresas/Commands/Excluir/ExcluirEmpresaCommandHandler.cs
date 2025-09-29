@@ -17,7 +17,7 @@ namespace Antecipacao.Application.Empresas.Commands.Excluir
         public async Task<DomainResponse<bool>> Handle(ExcluirEmpresaCommand request, CancellationToken cancellationToken)
         {
             if (request.id == Guid.Empty)
-                return DomainResponse<bool>.Falied("Não foi possivel excluir a Empresa!", HttpStatusCode.NoContent);
+                return DomainResponse<bool>.Falied("Não foi possivel excluir a Empresa!", HttpStatusCode.BadRequest);
 
             var empresa = await _repository.GetById(request.id);
             if (empresa is null)
@@ -29,7 +29,7 @@ namespace Antecipacao.Application.Empresas.Commands.Excluir
             if (!result)
                 return DomainResponse<bool>.Falied("Não foi possivel excluir a Empresa!", HttpStatusCode.BadRequest);
 
-            return DomainResponse<bool>.Created("Empresa excluida com sucesso!", HttpStatusCode.Created);
+            return DomainResponse<bool>.Created("Empresa excluida com sucesso!", HttpStatusCode.NoContent);
         }
     }
 }

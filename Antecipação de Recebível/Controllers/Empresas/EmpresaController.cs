@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Antecipacao.Application.Empresas.Commands.Criar;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Antecipação_de_Recebível.Controllers.Empresas
 {
@@ -8,21 +10,28 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
     {
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IMediator _mediator;
 
-        public EmpresaController(ILogger<WeatherForecastController> logger)
+        public EmpresaController(ILogger<WeatherForecastController> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpPost]
+        public async Task<ActionResult> Criar([FromBody] CriarEmpresaCommand commnad)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            try
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-            })
-            .ToArray();
+                var result = await _mediator.Send(commnad, HttpContext.RequestAborted);
+
+                return StatusCode((int)result.StatusCode, result);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"Error on GET {this.GetType().Name}");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
