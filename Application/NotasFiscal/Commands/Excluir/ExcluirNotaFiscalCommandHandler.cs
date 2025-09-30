@@ -29,7 +29,7 @@ namespace Antecipacao.Application.NotasFiscal.Commands.Excluir
             if (!result)
                 return DomainResponse<bool>.Falied("Não foi possivel excluir a Nota Fiscal!", HttpStatusCode.BadRequest);
 
-            return DomainResponse<bool>.Created("EmNota Fiscal excluida com sucesso!", HttpStatusCode.NoContent);
+            return DomainResponse<bool>.Created("Nota Fiscal excluida com sucesso!", HttpStatusCode.NoContent);
         }
     }
 }
