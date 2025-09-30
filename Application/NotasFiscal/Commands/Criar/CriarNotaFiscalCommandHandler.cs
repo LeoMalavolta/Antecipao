@@ -17,7 +17,7 @@ namespace Antecipacao.Application.NotasFiscal.Commands.Criar
 
         public async Task<DomainResponse<bool>> Handle(CriarNotaFiscalCommand request, CancellationToken cancellationToken)
         {
-            var notaFiscal = new NotaFiscal(request.idCarrinho, request.numero, request.valor, request.dataVencimento);
+            var notaFiscal = new NotaFiscal(request.idEmpresa, request.idCarrinho, request.numero, request.valor, request.dataVencimento);
 
             var result = await _repository.Create(notaFiscal);
             if (!result)

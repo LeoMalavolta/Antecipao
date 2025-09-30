@@ -4,22 +4,22 @@ namespace Antecipacao.Domain.Entities
 {
     public class CarrinhoAntecipacao : Entity
     {
-        public Guid IdEmpresa { get; private set; }
-        public decimal ValorTotalBruto { get; private set; }
-        public decimal ValorTotalLiquido { get; private set; }
-        public ICollection<NotaFiscal> NotasFiscais { get; private set; }
         public DateTime? DataAntecipacao { get; private set; }
 
-        protected CarrinhoAntecipacao() { } 
+        public Guid IdEmpresa { get; private set; }
+        public Empresa Empresa { get; private set; }
+        public IReadOnlyList<NotaFiscal> NotasFiscais => _notasFiscais;
 
-        public CarrinhoAntecipacao(Guid idEmpresa, decimal valorTotalBruto, decimal valorTotalLiquido)
+        private List<NotaFiscal> _notasFiscais = new List<NotaFiscal>();
+
+        protected CarrinhoAntecipacao() { }
+
+        public CarrinhoAntecipacao(Guid idEmpresa)
         {
             AlterarEmpresa(idEmpresa);
-            AlterarValorTotalBruto(valorTotalBruto);
-            AlterarValorTotalLiquido(valorTotalLiquido);
         }
 
-        public void AlterarEmpresa(Guid empresaId)
+        private void AlterarEmpresa(Guid empresaId)
         {
             if (empresaId == Guid.Empty)
                 throw new ArgumentException("Empresa é obrigatório.");
@@ -27,28 +27,37 @@ namespace Antecipacao.Domain.Entities
             IdEmpresa = empresaId;
         }
 
-        public void AlterarValorTotalBruto(decimal valorTotalBruto)
+        public void AdicionarNota(NotaFiscal notaFiscal, decimal limiteCreditoAtual)
         {
-            if (valorTotalBruto <= 0)
-                throw new ArgumentException("Valor antecipado deve ser maior que zero.");
+            var totalCarrinho = _notasFiscais.Sum(n => n.Valor) + notaFiscal.Valor;
 
-            ValorTotalBruto = valorTotalBruto;
+            if (totalCarrinho > limiteCreditoAtual)
+                throw new InvalidOperationException("O valor do carrinho ultrapassa o limite da empresa.");
+
+            _notasFiscais.Add(notaFiscal);
+            Atualizar();
         }
 
-        public void AlterarValorTotalLiquido(decimal valorTotalLiquido)
+        public void RemoverNota(Guid idNota)
         {
-            if (valorTotalLiquido <= 0)
-                throw new ArgumentException("Valor antecipado deve ser maior que zero.");
+            var nota = _notasFiscais.FirstOrDefault(n => n.Id == idNota);
+            if (nota != null)
+                _notasFiscais.Remove(nota);
 
-            ValorTotalLiquido = valorTotalLiquido;
+            Atualizar();
         }
 
-        public void DefinirDataAntecipacao(DateTime dataAntecipacao)
+        public void Checkout()
         {
-            if (dataAntecipacao < DateTime.UtcNow)
-                throw new ArgumentException("Data de antecipação não pode ser no passado.");
+            if (ValidarCheckout())
+            {
 
-            DataAntecipacao = dataAntecipacao;
+            }
+        }
+
+        private bool ValidarCheckout()
+        {
+            return true;
         }
     }
 }

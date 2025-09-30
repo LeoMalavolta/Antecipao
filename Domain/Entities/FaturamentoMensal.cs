@@ -4,9 +4,10 @@ namespace Antecipacao.Domain.Entities
 {
     public class FaturamentoMensal : Entity
     {
-        public Guid IdEmpresa { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime Periodo { get; private set; }
+        public Guid IdEmpresa { get; private set; }
+        public Empresa Empresa { get; private set; }
         
         protected FaturamentoMensal() { }
 

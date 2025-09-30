@@ -3,6 +3,8 @@
 namespace Antecipacao.Domain.Interfaces.Empresas
 {
     public interface IEmpresaWriteRepository : IWriteRepository<Empresa>
-    { 
+    {
+        Task<Empresa> ObterEmpresaComCarrinho(Guid id);
+        Task<decimal> ObterLimite(Guid id);
     }
 }

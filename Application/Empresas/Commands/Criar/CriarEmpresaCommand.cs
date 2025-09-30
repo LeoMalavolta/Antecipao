@@ -6,5 +6,6 @@ namespace Antecipacao.Application.Empresas.Commands.Criar
     public record CriarEmpresaCommand(
         string nome,
         string cnpj,
+        decimal faturamentoMensal,
         int ramo) : IRequest<DomainResponse<bool>>;
 }

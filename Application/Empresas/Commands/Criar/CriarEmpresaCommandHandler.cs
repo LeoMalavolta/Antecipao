@@ -19,6 +19,7 @@ namespace Antecipacao.Application.Empresas.Commands.Criar
         {
             var empresa = new Empresa(request.nome,
                                       request.cnpj,
+                                      request.faturamentoMensal,
                                       request.ramo);
 
             var result = await _repository.Create(empresa);

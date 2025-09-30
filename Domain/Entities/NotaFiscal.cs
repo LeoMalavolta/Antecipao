@@ -4,25 +4,38 @@ namespace Antecipacao.Domain.Entities
 {
     public class NotaFiscal : Entity
     {
-        public Guid? IdCarrinho { get; private set; }
         public string Numero { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime DataVencimento { get; private set; }
 
+        public Guid IdEmpresa { get; private set; }
+        public Empresa Empresa { get; private set; }
+        public Guid? IdCarrinho { get; private set; }
+        public CarrinhoAntecipacao? Carrinho { get; private set; }
+
         protected NotaFiscal() { }
 
-        public NotaFiscal(Guid? idCarrinho, string numero, decimal valor, DateTime dataVencimento)
+        public NotaFiscal(Guid idEmpresa, Guid? idCarrinho, string numero, decimal valor, DateTime dataVencimento)
         {
+            AlterarEmpresa(idEmpresa);
             AlterarCarrinho(idCarrinho);
             AlterarNumero(numero);
             AlterarValor(valor);
             AlterarDataVencimento(dataVencimento);
         }
 
+        public void AlterarEmpresa(Guid idEmpresa)
+        {
+            if (idEmpresa == Guid.Empty)
+                throw new ArgumentException("Empresa é obrigatório.");
+
+            IdEmpresa = idEmpresa;
+        }
+
         public void AlterarCarrinho(Guid? idCarrinho)
         {
             if (idCarrinho == Guid.Empty)
-                throw new ArgumentException("IdCarrinho é obrigatório.");
+                throw new ArgumentException("IdCarrinho empty.");
 
             IdCarrinho = idCarrinho;
         }
@@ -33,6 +46,7 @@ namespace Antecipacao.Domain.Entities
                 throw new ArgumentException("Número da nota fiscal é obrigatório.");
 
             Numero = numero;
+            Atualizar();
         }
 
         public void AlterarValor(decimal valor)
@@ -41,6 +55,7 @@ namespace Antecipacao.Domain.Entities
                 throw new ArgumentException("Valor da nota fiscal deve ser maior que zero.");
 
             Valor = valor;
+            Atualizar();
         }
 
         public void AlterarDataVencimento(DateTime dataVencimento)
@@ -49,6 +64,7 @@ namespace Antecipacao.Domain.Entities
                 throw new ArgumentException("Data de vencimento não pode ser no passado.");
 
             DataVencimento = dataVencimento;
+            Atualizar();
         }
     }
 }

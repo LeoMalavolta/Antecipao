@@ -37,5 +37,23 @@ namespace Antecipacao.Infrastructure.Repositories.Empresas
         {
             return await _context.Empresas.FindAsync(id);
         }
+
+        public async Task<Empresa?> ObterEmpresaComCarrinho(Guid id)
+        {
+            return await _context.Empresas
+                                 .Include(e => e.Faturamento)
+                                 .Include(e => e.Carrinho
+                                     .Where(c => c.DataAntecipacao == null)) 
+                                     .ThenInclude(c => c.NotasFiscais)
+                                 .FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<decimal> ObterLimite(Guid id)
+        {
+            return await _context.Empresas
+                .Where(e => e.Id == id)
+                .Select(e => e.Limite)
+                .FirstOrDefaultAsync();
+        }
     }
 }
