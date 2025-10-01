@@ -38,6 +38,8 @@ namespace Antecipacao.Application.CarrinhosAntecipacao.Commands.AdicionarNota
                 if (carrinho is null)
                 {
                     carrinho = new CarrinhoAntecipacao(request.idEmpresa);
+                    carrinho.AdicionarNota(nota, limiteEmpresa);
+
                     var result = await _repository.Create(carrinho);
                     if (!result)
                         return DomainResponse<bool>.Falied("Não foi possível adicionar Nota.", HttpStatusCode.BadRequest);

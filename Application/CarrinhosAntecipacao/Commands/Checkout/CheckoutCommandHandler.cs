@@ -22,15 +22,14 @@ namespace Antecipacao.Application.CarrinhosAntecipacao.Commands.Checkout
             if (request.id == Guid.Empty || request.idEmpresa == Guid.Empty)
                 return DomainResponse<bool>.Falied("Não foi possivel fazer Checkout!", HttpStatusCode.BadRequest);
 
-            var empresa = await _empresaRepository.ObterEmpresaComCarrinho(request.id);
-            var carrinhoAtivo = empresa.Carrinho.FirstOrDefault(c => c.NotasFiscais != null && c.NotasFiscais.Any());
+            var carrinho = await _repository.ObterCarrinhoComNotas(request.id);
 
-            if (empresa is null || carrinhoAtivo is null)
-                return DomainResponse<bool>.Falied("Não foi possivel fazer Checkout!", HttpStatusCode.NotFound);
+            if (carrinho is null || carrinho.NotasFiscais.Any())
+                return DomainResponse<bool>.Falied("Não existem notas no carrinho!", HttpStatusCode.NotFound);
 
-            carrinhoAtivo.Checkout();
+            carrinho.Checkout();
 
-            var result = await _repository.Update(carrinhoAtivo);
+            var result = await _repository.Update(carrinho);
             if (!result)
                 return DomainResponse<bool>.Falied("Não foi possivel alterar o Carrinho Antecipação!", HttpStatusCode.BadRequest);
 

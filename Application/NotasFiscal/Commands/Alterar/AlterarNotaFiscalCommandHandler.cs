@@ -24,7 +24,7 @@ namespace Antecipacao.Application.NotasFiscal.Commands.Alterar
                 return DomainResponse<bool>.Falied("Não foi possivel alterar a Nota Fiscal!", HttpStatusCode.NotFound);
 
             notaFiscal.AlterarNumero(request.numero);
-            notaFiscal.AlterarValor(request.valor);
+            notaFiscal.AlterarValorBruto(request.valor);
             notaFiscal.AlterarDataVencimento(request.dataVencimento);
 
             var result = await _repository.Update(notaFiscal);

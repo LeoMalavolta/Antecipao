@@ -5,7 +5,8 @@ namespace Antecipacao.Domain.Entities
     public class NotaFiscal : Entity
     {
         public string Numero { get; private set; }
-        public decimal Valor { get; private set; }
+        public decimal ValorBruto { get; private set; }
+        public decimal? ValorLiquido { get; private set; }
         public DateTime DataVencimento { get; private set; }
 
         public Guid IdEmpresa { get; private set; }
@@ -20,7 +21,7 @@ namespace Antecipacao.Domain.Entities
             AlterarEmpresa(idEmpresa);
             AlterarCarrinho(idCarrinho);
             AlterarNumero(numero);
-            AlterarValor(valor);
+            AlterarValorBruto(valor);
             AlterarDataVencimento(dataVencimento);
         }
 
@@ -49,12 +50,21 @@ namespace Antecipacao.Domain.Entities
             Atualizar();
         }
 
-        public void AlterarValor(decimal valor)
+        public void AlterarValorBruto(decimal valor)
         {
             if (valor <= 0)
                 throw new ArgumentException("Valor da nota fiscal deve ser maior que zero.");
 
-            Valor = valor;
+            ValorBruto = valor;
+            Atualizar();
+        }
+
+        public void AlterarValorLiquido(decimal valor)
+        {
+            if (valor <= 0)
+                throw new ArgumentException("Valor da nota fiscal deve ser maior que zero.");
+
+            ValorLiquido = valor;
             Atualizar();
         }
 
