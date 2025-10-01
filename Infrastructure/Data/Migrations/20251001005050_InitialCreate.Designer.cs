@@ -4,16 +4,19 @@ using Antecipacao.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Antecipacao.Infrastructure.Migrations
+namespace Antecipacao.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AntecipacaoDeRecebiveisDbContext))]
-    partial class AntecipacaoDeRecebiveisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251001005050_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,16 +43,16 @@ namespace Antecipacao.Infrastructure.Migrations
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("EmpresaId")
+                    b.Property<Guid>("EmpresaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdEmpresa")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("ValorTotalBruto")
+                    b.Property<decimal?>("ValorTotalBruto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("ValorTotalLiquido")
+                    b.Property<decimal?>("ValorTotalLiquido")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -78,6 +81,9 @@ namespace Antecipacao.Infrastructure.Migrations
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("Limite")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -105,7 +111,7 @@ namespace Antecipacao.Infrastructure.Migrations
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("EmpresaId")
+                    b.Property<Guid>("EmpresaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdEmpresa")
@@ -130,7 +136,7 @@ namespace Antecipacao.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CarrinhoAntecipacaoId")
+                    b.Property<Guid?>("CarrinhoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataAtualizacao")
@@ -145,42 +151,71 @@ namespace Antecipacao.Infrastructure.Migrations
                     b.Property<DateTime>("DataVencimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IdCarrinho")
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IdCarrinho")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdEmpresa")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Valor")
+                    b.Property<decimal>("ValorBruto")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("ValorLiquido")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarrinhoAntecipacaoId");
+                    b.HasIndex("CarrinhoId");
+
+                    b.HasIndex("EmpresaId");
 
                     b.ToTable("NotasFiscais");
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.CarrinhoAntecipacao", b =>
                 {
-                    b.HasOne("Antecipacao.Domain.Entities.Empresa", null)
+                    b.HasOne("Antecipacao.Domain.Entities.Empresa", "Empresa")
                         .WithMany("Carrinho")
-                        .HasForeignKey("EmpresaId");
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.FaturamentoMensal", b =>
                 {
-                    b.HasOne("Antecipacao.Domain.Entities.Empresa", null)
+                    b.HasOne("Antecipacao.Domain.Entities.Empresa", "Empresa")
                         .WithMany("Faturamento")
-                        .HasForeignKey("EmpresaId");
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.NotaFiscal", b =>
                 {
-                    b.HasOne("Antecipacao.Domain.Entities.CarrinhoAntecipacao", null)
+                    b.HasOne("Antecipacao.Domain.Entities.CarrinhoAntecipacao", "Carrinho")
                         .WithMany("NotasFiscais")
-                        .HasForeignKey("CarrinhoAntecipacaoId");
+                        .HasForeignKey("CarrinhoId");
+
+                    b.HasOne("Antecipacao.Domain.Entities.Empresa", "Empresa")
+                        .WithMany("NotasFiscais")
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Carrinho");
+
+                    b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.CarrinhoAntecipacao", b =>
@@ -193,6 +228,8 @@ namespace Antecipacao.Infrastructure.Migrations
                     b.Navigation("Carrinho");
 
                     b.Navigation("Faturamento");
+
+                    b.Navigation("NotasFiscais");
                 });
 #pragma warning restore 612, 618
         }
