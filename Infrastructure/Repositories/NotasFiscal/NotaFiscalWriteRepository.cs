@@ -16,8 +16,15 @@ namespace Antecipacao.Infrastructure.Repositories.NotasFiscal
 
         public async Task<bool> Create(NotaFiscal entity)
         {
-            await _context.NotasFiscais.AddAsync(entity);
-            return await _context.SaveChangesAsync() > 0;
+            try
+            {
+                await _context.NotasFiscais.AddAsync(entity);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> Update(NotaFiscal entity)

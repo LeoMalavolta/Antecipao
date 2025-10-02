@@ -16,8 +16,15 @@ namespace Antecipacao.Infrastructure.Repositories.FaturamentosMensal
 
         public async Task<bool> Create(FaturamentoMensal entity)
         {
-            await _context.FaturamentosMensal.AddAsync(entity);
-            return await _context.SaveChangesAsync() > 0;
+            try
+            {
+                await _context.FaturamentosMensal.AddAsync(entity);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> Update(FaturamentoMensal entity)

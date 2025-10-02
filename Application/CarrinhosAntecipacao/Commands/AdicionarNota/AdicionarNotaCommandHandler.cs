@@ -26,7 +26,7 @@ namespace Antecipacao.Application.CarrinhosAntecipacao.Commands.AdicionarNota
             try
             {
                 if (request.idNota == Guid.Empty)
-                    return DomainResponse<bool>.Falied("Não foi possivel alterar o adicionar Nota Fiscal!", HttpStatusCode.BadRequest);
+                    return DomainResponse<bool>.Falied("Não foi possivel adicionar Nota Fiscal!", HttpStatusCode.BadRequest);
 
                 var nota = await _notaRepository.GetById(request.idNota);
                 if (nota is null)

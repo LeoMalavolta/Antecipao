@@ -5,21 +5,24 @@ using Antecipacao.Domain.Interfaces.CarrinhosAntecipacao;
 using Antecipacao.Domain.Interfaces.Empresas;
 using Antecipacao.Domain.Interfaces.NotasFiscal;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace Antecipacao.Application.CarrinhosAntecipacao.Commands.RemoverNota
 {
-    public class AdicionarNotaCommandHandler : IRequestHandler<AdicionarNotaCommand, DomainResponse<bool>>
+    public class RemoverNotaCommandHandler : IRequestHandler<RemoverNotaCommand, DomainResponse<bool>>
     {
         public readonly ICarrinhoAntecipacaoWriteRepository _repository;
+        public readonly INotaFiscalWriteRepository _notaRepository;
+        public readonly IEmpresaWriteRepository _empresaRepository;
 
-        public AdicionarNotaCommandHandler(ICarrinhoAntecipacaoWriteRepository repository)
+        public RemoverNotaCommandHandler(ICarrinhoAntecipacaoWriteRepository repository, INotaFiscalWriteRepository notaRepository, IEmpresaWriteRepository empresaRepository)
         {
             _repository = repository;
+            _notaRepository = notaRepository;
+            _empresaRepository = empresaRepository;
         }
 
-        public async Task<DomainResponse<bool>> Handle(AdicionarNotaCommand request, CancellationToken cancellationToken)
+        public async Task<DomainResponse<bool>> Handle(RemoverNotaCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -41,6 +44,7 @@ namespace Antecipacao.Application.CarrinhosAntecipacao.Commands.RemoverNota
             catch (Exception ex)
             {
                 return DomainResponse<bool>.Falied($"Não foi possivel remover Nota Fiscal! {ex.Message}", HttpStatusCode.InternalServerError);
+
             }
         }
     }

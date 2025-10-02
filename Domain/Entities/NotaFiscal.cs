@@ -11,6 +11,8 @@ namespace Antecipacao.Domain.Entities
 
         public Guid IdEmpresa { get; private set; }
         public Empresa Empresa { get; private set; }
+
+   
         public Guid? IdCarrinho { get; private set; }
         public CarrinhoAntecipacao? Carrinho { get; private set; }
 

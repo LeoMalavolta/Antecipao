@@ -23,7 +23,7 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         [HttpPost]
         public async Task<ActionResult> Criar([FromBody] CriarNotaFiscalCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Recebida requisição para criar nota fiscal {numero} da empresa {idEmpresa}", command.numero, command.idEmpresa);
+            _logger.LogInformation("Recebida requisição para criar nota fiscal {numero} da empresa com Id {idEmpresa}", command.numero, command.idEmpresa);
 
             try
             {
@@ -35,7 +35,7 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao criar nota fiscal {numero} da empresa {idEmpresa}", command.numero, command.idEmpresa);
+                _logger.LogError(ex, "Erro ao criar nota fiscal {numero} da empresa com Id {idEmpresa}", command.numero, command.idEmpresa);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -44,7 +44,7 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         [HttpPut]
         public async Task<ActionResult> Alterar([FromBody] AlterarNotaFiscalCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Recebida requisição para alterar nota fiscal {numero}, {idNota}", command.numero, command.id);
+            _logger.LogInformation("Recebida requisição para alterar nota fiscal {numero}, nota com Id {idNota}", command.numero, command.id);
 
             try
             {
@@ -56,7 +56,7 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao alterar nota fiscal {numero}, {idNota}", command.numero, command.id);
+                _logger.LogError(ex, "Erro ao alterar nota fiscal {numero}, nota com Id {idNota}", command.numero, command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -65,7 +65,7 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         [HttpPut("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirNotaFiscalCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Recebida requisição para excluir nota fiscal {idNota}", command.id);
+            _logger.LogInformation("Recebida requisição para excluir nota fiscal, nota com Id {idNota}", command.id);
 
             try
             {
@@ -77,7 +77,7 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao excluir nota fiscal {idNota}", command.id);
+                _logger.LogError(ex, "Erro ao excluir nota fiscal, nota com Id {idNota}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

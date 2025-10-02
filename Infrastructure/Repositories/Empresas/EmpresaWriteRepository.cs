@@ -1,4 +1,5 @@
-﻿using Antecipacao.Domain.Entities;
+﻿using Antecipacao.Domain;
+using Antecipacao.Domain.Entities;
 using Antecipacao.Domain.Interfaces.Empresas;
 using Antecipacao.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -41,8 +42,8 @@ namespace Antecipacao.Infrastructure.Repositories.Empresas
         public async Task<Empresa?> ObterEmpresaComCarrinho(Guid id)
         {
             return await _context.Empresas
-                                 .Include(e => e.Faturamento)
-                                 .Include(e => e.Carrinho
+                                 .Include(e => e.Faturamentos)
+                                 .Include(e => e.Carrinhos
                                      .Where(c => c.DataAntecipacao == null)) 
                                      .ThenInclude(c => c.NotasFiscais)
                                  .FirstOrDefaultAsync(e => e.Id == id);
@@ -54,6 +55,14 @@ namespace Antecipacao.Infrastructure.Repositories.Empresas
                 .Where(e => e.Id == id)
                 .Select(e => e.Limite)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> EmpresaJaCadastrada(string cnpj)
+        {
+            var cnpjLimpo = Utils.RemoverNaoNumericos(cnpj);
+
+            return await _context.Empresas
+                .AnyAsync(c => c.Cnpj == cnpjLimpo && c.DataExclusao != null);
         }
     }
 }

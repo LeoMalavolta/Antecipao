@@ -42,7 +42,7 @@ namespace Antecipacao.Infrastructure.Repositories.CarrinhosAntecipacao
         {
             return await _context.CarrinhosAntecipacao
                                  .Include(c => c.NotasFiscais)
-                                 .FirstOrDefaultAsync(c => c.Id == id && c.DataAntecipacao == null);
+                                 .FirstOrDefaultAsync(c => c.IdEmpresa == id && c.DataAntecipacao == null);
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Antecipacao.Domain.Entities
 
         public Guid IdEmpresa { get; private set; }
         public Empresa Empresa { get; private set; }
-        public IReadOnlyList<NotaFiscal> NotasFiscais => _notasFiscais;
 
-        private List<NotaFiscal> _notasFiscais = new List<NotaFiscal>();
+        private readonly List<NotaFiscal> _notasFiscais = new();
+        public IReadOnlyCollection<NotaFiscal> NotasFiscais => _notasFiscais.AsReadOnly();
 
         protected CarrinhoAntecipacao() { }
 

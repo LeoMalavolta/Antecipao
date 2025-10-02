@@ -11,13 +11,14 @@ namespace Antecipacao.Domain.Entities
         public decimal Limite { get; private set; }
         public RamoEmpresa RamoEmpresa { get; private set; }
 
-        public IReadOnlyList<FaturamentoMensal> Faturamento => _faturamento;
-        public IReadOnlyList<NotaFiscal> NotasFiscais => _notasFiscais;
-        public IReadOnlyList<CarrinhoAntecipacao> Carrinho => _carrinho;
+        private readonly List<FaturamentoMensal> _faturamentos = new();
+        public IReadOnlyCollection<FaturamentoMensal> Faturamentos => _faturamentos.AsReadOnly();
 
-        private List<FaturamentoMensal> _faturamento = new List<FaturamentoMensal>();
-        private List<NotaFiscal> _notasFiscais = new List<NotaFiscal>();
-        private List<CarrinhoAntecipacao> _carrinho = new List<CarrinhoAntecipacao>();
+        private readonly List<NotaFiscal> _notasFiscais = new();
+        public IReadOnlyCollection<NotaFiscal> NotasFiscais => _notasFiscais.AsReadOnly();
+
+        private readonly List<CarrinhoAntecipacao> _carrinhos = new();
+        public IReadOnlyCollection<CarrinhoAntecipacao> Carrinhos => _carrinhos.AsReadOnly();
 
         protected Empresa() { }
 
@@ -59,7 +60,7 @@ namespace Antecipacao.Domain.Entities
         public void AdicionarFaturamento(FaturamentoMensal faturamento)
         {
             if (faturamento == null) throw new ArgumentNullException(nameof(faturamento));
-            _faturamento.Add(faturamento);
+            _faturamentos.Add(faturamento);
         }
 
         public void CalcularLimite(decimal? faturamentoMensal = null)
@@ -72,6 +73,8 @@ namespace Antecipacao.Domain.Entities
                 Limite = CalcularLimiteProdutos(mediaFaturamento);
             else
                 throw new ArgumentException("Ramo da empresa inválido.");
+
+            Atualizar();
         }
 
         private decimal CalcularMediaFaturamento(decimal? faturamentoMensal = null)
@@ -80,7 +83,7 @@ namespace Antecipacao.Domain.Entities
                 return faturamentoMensal.Value;
 
             var dataCorte = DateTime.UtcNow.AddMonths(-12);
-            var faturamentos = _faturamento
+            var faturamentos = _faturamentos
                 .Where(f => f.Periodo >= dataCorte)
                 .ToList();
 

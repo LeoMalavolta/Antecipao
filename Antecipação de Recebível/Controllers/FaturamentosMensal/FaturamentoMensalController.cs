@@ -24,7 +24,7 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         [HttpPost]
         public async Task<ActionResult> Criar([FromBody] CriarFaturamentoMensalCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Recebida requisição para criar faturamento mensal da empresa {idEmpresa}", command.idEmpresa);
+            _logger.LogInformation("Recebida requisição para criar faturamento mensal da empresa com Id {idEmpresa}", command.idEmpresa);
 
             try
             {
@@ -36,7 +36,7 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao criar faturamento mensal da empresa {idEmpresa}", command.idEmpresa);
+                _logger.LogError(ex, "Erro ao criar faturamento mensal da empresa com Id {idEmpresa}", command.idEmpresa);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -44,7 +44,7 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         [HttpPut]
         public async Task<ActionResult> Alterar([FromBody] AlterarFaturamentoMensalCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Recebida requisição para criar faturamento mensal {idFaturamento}", command.id);
+            _logger.LogInformation("Recebida requisição para criar faturamento mensal com Id {idFaturamento}", command.id);
 
             try
             {
@@ -56,7 +56,7 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao alterar faturamento mensal da empresa {idFaturamento}", command.id);
+                _logger.LogError(ex, "Erro ao alterar faturamento mensal da empresa com Id {idFaturamento}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -64,7 +64,7 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         [HttpPut("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirFaturamentoMensalCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Recebida requisição para excluir faturamento mensal {idFaturamento}", command.id);
+            _logger.LogInformation("Recebida requisição para excluir faturamento mensal com Id {idFaturamento}", command.id);
 
             try
             {
@@ -76,7 +76,7 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao excluir faturamento mensal da empresa {idFaturamento}", command.id);
+                _logger.LogError(ex, "Erro ao excluir faturamento mensal da empresa com Id {idFaturamento}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

@@ -4,6 +4,7 @@ using Antecipacao.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Antecipacao.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AntecipacaoDeRecebiveisDbContext))]
-    partial class AntecipacaoDeRecebiveisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251002044230_AlteracaoEntidades")]
+    partial class AlteracaoEntidades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +43,9 @@ namespace Antecipacao.Infrastructure.Data.Migrations
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("EmpresaId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IdEmpresa")
                         .HasColumnType("uniqueidentifier");
 
@@ -51,7 +57,7 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEmpresa");
+                    b.HasIndex("EmpresaId");
 
                     b.ToTable("CarrinhosAntecipacao");
                 });
@@ -64,8 +70,7 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.Property<string>("Cnpj")
                         .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("datetime2");
@@ -81,16 +86,12 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RamoEmpresa")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Cnpj")
-                        .IsUnique();
 
                     b.ToTable("Empresas");
                 });
@@ -110,6 +111,9 @@ namespace Antecipacao.Infrastructure.Data.Migrations
                     b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("EmpresaId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IdEmpresa")
                         .HasColumnType("uniqueidentifier");
 
@@ -121,7 +125,7 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEmpresa");
+                    b.HasIndex("EmpresaId");
 
                     b.ToTable("FaturamentosMensal");
                 });
@@ -130,6 +134,9 @@ namespace Antecipacao.Infrastructure.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CarrinhoAntecipacaoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataAtualizacao")
@@ -143,6 +150,9 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.Property<DateTime>("DataVencimento")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmpresaId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdCarrinho")
                         .HasColumnType("uniqueidentifier");
@@ -162,48 +172,38 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCarrinho");
+                    b.HasIndex("CarrinhoAntecipacaoId");
 
-                    b.HasIndex("IdEmpresa");
+                    b.HasIndex("EmpresaId");
 
                     b.ToTable("NotasFiscais");
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.CarrinhoAntecipacao", b =>
                 {
-                    b.HasOne("Antecipacao.Domain.Entities.Empresa", "Empresa")
-                        .WithMany("Carrinhos")
-                        .HasForeignKey("IdEmpresa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Empresa");
+                    b.HasOne("Antecipacao.Domain.Entities.Empresa", null)
+                        .WithMany("Carrinho")
+                        .HasForeignKey("EmpresaId");
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.FaturamentoMensal", b =>
                 {
-                    b.HasOne("Antecipacao.Domain.Entities.Empresa", "Empresa")
-                        .WithMany("Faturamentos")
-                        .HasForeignKey("IdEmpresa")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Empresa");
+                    b.HasOne("Antecipacao.Domain.Entities.Empresa", null)
+                        .WithMany("Faturamento")
+                        .HasForeignKey("EmpresaId");
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.NotaFiscal", b =>
                 {
-                    b.HasOne("Antecipacao.Domain.Entities.CarrinhoAntecipacao", "Carrinho")
+                    b.HasOne("Antecipacao.Domain.Entities.CarrinhoAntecipacao", null)
                         .WithMany("NotasFiscais")
-                        .HasForeignKey("IdCarrinho");
+                        .HasForeignKey("CarrinhoAntecipacaoId");
 
                     b.HasOne("Antecipacao.Domain.Entities.Empresa", "Empresa")
                         .WithMany("NotasFiscais")
-                        .HasForeignKey("IdEmpresa")
+                        .HasForeignKey("EmpresaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Carrinho");
 
                     b.Navigation("Empresa");
                 });
@@ -215,9 +215,9 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.Empresa", b =>
                 {
-                    b.Navigation("Carrinhos");
+                    b.Navigation("Carrinho");
 
-                    b.Navigation("Faturamentos");
+                    b.Navigation("Faturamento");
 
                     b.Navigation("NotasFiscais");
                 });
