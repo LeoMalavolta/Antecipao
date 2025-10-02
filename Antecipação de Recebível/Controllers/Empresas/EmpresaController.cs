@@ -23,15 +23,19 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
         [HttpPost]
         public async Task<ActionResult> Criar([FromBody] CriarEmpresaCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para criar empresa com CNPJ {Cnpj}", command.cnpj);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Empresa criada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on POST {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao criar empresa com CNPJ {Cnpj}", command.cnpj);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -39,15 +43,19 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
         [HttpPut]
         public async Task<ActionResult> Alterar([FromBody] AlterarEmpresaCommand command)
         {
+            _logger.LogInformation("Recebida requisição para alterar empresa com CNPJ {Cnpj}", command.cnpj);
+
             try
             {
                 var result = await _mediator.Send(command, HttpContext.RequestAborted);
+
+                _logger.LogInformation("Empresa alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao alterar empresa com CNPJ {Cnpj}", command.cnpj);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -55,15 +63,19 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
         [HttpPut("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirEmpresaCommand command)
         {
+            _logger.LogInformation("Recebida requisição para excluir empresa com Id {EmpresaId}", command.id);
+
             try
             {
                 var result = await _mediator.Send(command, HttpContext.RequestAborted);
+
+                _logger.LogInformation("Empresa {EmpresaId} excluída com StatusCode {StatusCode}", command.id, result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao excluir empresa com Id {EmpresaId}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

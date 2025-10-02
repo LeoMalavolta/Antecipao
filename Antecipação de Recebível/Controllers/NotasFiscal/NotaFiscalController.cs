@@ -1,5 +1,4 @@
-﻿using Antecipacao.Application.FaturamentosMensal.Commands.Criar;
-using Antecipacao.Application.NotasFiscal.Commands.Alterar;
+﻿using Antecipacao.Application.NotasFiscal.Commands.Alterar;
 using Antecipacao.Application.NotasFiscal.Commands.Criar;
 using Antecipacao.Application.NotasFiscal.Commands.Excluir;
 using MediatR;
@@ -24,15 +23,19 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         [HttpPost]
         public async Task<ActionResult> Criar([FromBody] CriarNotaFiscalCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para criar nota fiscal {numero} da empresa {idEmpresa}", command.numero, command.idEmpresa);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Nota fiscal criada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on POST {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao criar nota fiscal {numero} da empresa {idEmpresa}", command.numero, command.idEmpresa);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -41,15 +44,19 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         [HttpPut]
         public async Task<ActionResult> Alterar([FromBody] AlterarNotaFiscalCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para alterar nota fiscal {numero}, {idNota}", command.numero, command.id);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Nota fiscal alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao alterar nota fiscal {numero}, {idNota}", command.numero, command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -58,15 +65,19 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         [HttpPut("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirNotaFiscalCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para excluir nota fiscal {idNota}", command.id);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Nota fiscal excluida com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao excluir nota fiscal {idNota}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

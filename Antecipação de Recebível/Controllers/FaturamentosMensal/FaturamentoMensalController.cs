@@ -24,15 +24,19 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         [HttpPost]
         public async Task<ActionResult> Criar([FromBody] CriarFaturamentoMensalCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para criar faturamento mensal da empresa {idEmpresa}", command.idEmpresa);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Faturamento mensal criado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on POST {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao criar faturamento mensal da empresa {idEmpresa}", command.idEmpresa);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -40,15 +44,19 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         [HttpPut]
         public async Task<ActionResult> Alterar([FromBody] AlterarFaturamentoMensalCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para criar faturamento mensal {idFaturamento}", command.id);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Faturamento mensal alterado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao alterar faturamento mensal da empresa {idFaturamento}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -56,15 +64,19 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         [HttpPut("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirFaturamentoMensalCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para excluir faturamento mensal {idFaturamento}", command.id);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Faturamento mensal excluido com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao excluir faturamento mensal da empresa {idFaturamento}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

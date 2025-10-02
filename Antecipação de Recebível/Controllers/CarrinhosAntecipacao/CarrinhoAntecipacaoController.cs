@@ -23,15 +23,19 @@ namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
         [HttpPut("adicionar-nota")]
         public async Task<ActionResult> AdicionarNota([FromBody] AdicionarNotaCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para adicionar nota {idNota} no carrinho da empresa {idEmpresa}", command.idNota, command.idEmpresa);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Nota adicionada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao adicionar nota {NotaId} no carrinho da empresa {EmpresaId}", command.idNota, command.idEmpresa); 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -39,15 +43,19 @@ namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
         [HttpPut("remover-nota")]
         public async Task<ActionResult> RemoverNota([FromBody] RemoverNotaCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para remover nota {idNota} no carrinho da empresa {idEmpresa}", command.idNota, command.idEmpresa);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Nota removida com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao remover nota {NotaId} no carrinho da empresa {EmpresaId}", command.idNota, command.idEmpresa);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -55,15 +63,19 @@ namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
         [HttpPut("checkout")]
         public async Task<ActionResult> Checkout([FromBody] CheckoutCommand command, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Recebida requisição para fazer checkout da empresa {idEmpresa}", command.idEmpresa);
+
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
+
+                _logger.LogInformation("Checkout realizado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                _logger.LogError(ex, "Erro ao fazer checkout da empresa {idEmpresa}", command.idEmpresa);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
