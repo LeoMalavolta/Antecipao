@@ -25,8 +25,8 @@ namespace Antecipacao.Domain.Entities
         {
             AlterarNome(nome);
             AlterarCnpj(cnpj);
-            CalcularLimite(faturamentoMensal);
             AlterarRamoEmpresa(ramoEmpresa);
+            CalcularLimite(faturamentoMensal);
         }
 
         public void AlterarNome(string nome)

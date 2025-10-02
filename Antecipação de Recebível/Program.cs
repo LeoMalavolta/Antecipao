@@ -1,7 +1,6 @@
-using Antecipacao.Domain.Interfaces.Empresas;
+using Antecipacao.Application.Empresas.Commands.Criar;
 using Antecipacao.Infrastructure;
 using Antecipacao.Infrastructure.Data;
-using Antecipacao.Infrastructure.Repositories.Empresas;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,11 +11,16 @@ builder.Services.AddDbContext<AntecipacaoDeRecebiveisDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+
 builder.Services.AddControllers();
 builder.Services.AddServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(CriarEmpresaCommand).Assembly));
 
 var app = builder.Build();
 

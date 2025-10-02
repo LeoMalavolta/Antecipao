@@ -1,47 +1,32 @@
-﻿using Antecipacao.Application.Empresas.Commands.Alterar;
+﻿using Antecipacao.Application.CarrinhosAntecipacao.Commands.AdicionarNota;
+using Antecipacao.Application.CarrinhosAntecipacao.Commands.Checkout;
+using Antecipacao.Application.CarrinhosAntecipacao.Commands.RemoverNota;
 using Antecipacao.Application.Empresas.Commands.Criar;
-using Antecipacao.Application.Empresas.Commands.Excluir;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Antecipação_de_Recebível.Controllers.Empresas
+namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmpresaController : ControllerBase
+    public class CarrinhoAntecipacaoController : ControllerBase
     {
 
-        private readonly ILogger<EmpresaController> _logger;
+        private readonly ILogger<CarrinhoAntecipacaoController> _logger;
         private readonly IMediator _mediator;
 
-        public EmpresaController(ILogger<EmpresaController> logger, IMediator mediator)
+        public CarrinhoAntecipacaoController(ILogger<CarrinhoAntecipacaoController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Criar([FromBody] CriarEmpresaCommand command, CancellationToken cancellationToken)
+        [HttpPut("adicionar-nota")]
+        public async Task<ActionResult> AdicionarNota([FromBody] AdicionarNotaCommand command, CancellationToken cancellationToken)
         {
             try
             {
                 var result = await _mediator.Send(command, cancellationToken);
-
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error on POST {this.GetType().Name}");
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
-        [HttpPut]
-        public async Task<ActionResult> Alterar([FromBody] AlterarEmpresaCommand command)
-        {
-            try
-            {
-                var result = await _mediator.Send(command, HttpContext.RequestAborted);
 
                 return StatusCode((int)result.StatusCode, result);
             }
@@ -52,12 +37,28 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
             }
         }
 
-        [HttpPut("excluir")]
-        public async Task<ActionResult> Excluir([FromBody] ExcluirEmpresaCommand command)
+        [HttpPut("remover-nota")]
+        public async Task<ActionResult> RemoverNota([FromBody] RemoverNotaCommand command, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _mediator.Send(command, HttpContext.RequestAborted);
+                var result = await _mediator.Send(command, cancellationToken);
+
+                return StatusCode((int)result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error on PUT {this.GetType().Name}");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPut("checkout")]
+        public async Task<ActionResult> Checkout([FromBody] CheckoutCommand command, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var result = await _mediator.Send(command, cancellationToken);
 
                 return StatusCode((int)result.StatusCode, result);
             }
