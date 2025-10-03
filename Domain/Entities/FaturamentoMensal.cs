@@ -37,7 +37,7 @@ namespace Antecipacao.Domain.Entities
 
         public void AlterarPeriodo(DateTime periodo)
         {
-            if (periodo > DateTime.Now)
+            if (periodo > DateTime.UtcNow)
                 throw new ArgumentException("Periodo inválido.");
 
             Periodo = periodo;

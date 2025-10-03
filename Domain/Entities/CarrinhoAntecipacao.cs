@@ -31,6 +31,9 @@ namespace Antecipacao.Domain.Entities
 
         public void AdicionarNota(NotaFiscal notaFiscal, decimal limiteCreditoAtual)
         {
+            if (notaFiscal.IdCarrinho is not null)
+                throw new InvalidOperationException("A nota já está vinculada a um carrinho.");
+
             var totalCarrinho = _notasFiscais.Sum(n => n.ValorBruto) + notaFiscal.ValorBruto;
 
             if (totalCarrinho > limiteCreditoAtual)
@@ -47,27 +50,15 @@ namespace Antecipacao.Domain.Entities
             if (nota != null)
                 _notasFiscais.Remove(nota);
 
+            ValorTotalBruto = _notasFiscais.Sum(n => n.ValorBruto);
+
             Atualizar();
         }
 
         public void Checkout()
         {
-            var resultadoNotas = new List<object>();
-            decimal valorTotalLiquido = 0m;
-            var dataAtual = DateTime.UtcNow;
-            var taxa = 0.0465m;
-
-            foreach (var nota in _notasFiscais)
-            {
-                var prazo = dataAtual.Day - nota.DataVencimento.Day;
-                var desagio = nota.ValorBruto / (decimal)Math.Pow((double)(1 + taxa), (double)prazo / 30);
-                var valorLiquido = nota.ValorBruto - desagio;
-
-                nota.AlterarValorLiquido(valorLiquido);
-                valorTotalLiquido += valorLiquido;
-            }
-
-            ValorTotalLiquido = valorTotalLiquido;
+            DataAntecipacao = DateTime.UtcNow;
+            Atualizar();
         }
     }
 }

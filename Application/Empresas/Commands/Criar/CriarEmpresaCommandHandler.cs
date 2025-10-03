@@ -22,7 +22,7 @@ namespace Antecipacao.Application.Empresas.Commands.Criar
                                       request.faturamentoMensal,
                                       request.ramo);
 
-            if (await _repository.EmpresaJaCadastrada(request.cnpj))
+            if (await _repository.EmpresaJaCadastrada(request.cnpj, empresa.Id))
                 return DomainResponse<bool>.Falied("O Cnpj já está cadastrada!", HttpStatusCode.BadRequest);
 
             var result = await _repository.Create(empresa);

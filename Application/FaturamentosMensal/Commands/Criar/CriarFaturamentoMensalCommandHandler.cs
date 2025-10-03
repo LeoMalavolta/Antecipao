@@ -19,6 +19,9 @@ namespace Antecipacao.Application.FaturamentosMensal.Commands.Criar
         {
             var faturamento = new FaturamentoMensal(request.idEmpresa, request.valor, request.periodo);
 
+            if (await _repository.PossuiFaturamentoNoPeriodo(request.periodo))
+                return DomainResponse<bool>.Falied("Já existe Faturamento cadastrado no periodo!", HttpStatusCode.BadRequest);
+
             var result = await _repository.Create(faturamento);
             if (!result)
                 return DomainResponse<bool>.Falied("Erro ao criar Faturamento Mensal!", HttpStatusCode.BadRequest);

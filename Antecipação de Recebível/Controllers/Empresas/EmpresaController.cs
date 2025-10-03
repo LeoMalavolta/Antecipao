@@ -1,4 +1,5 @@
 ﻿using Antecipacao.Application.Empresas.Commands.Alterar;
+using Antecipacao.Application.Empresas.Commands.CalcularLimite;
 using Antecipacao.Application.Empresas.Commands.Criar;
 using Antecipacao.Application.Empresas.Commands.Excluir;
 using MediatR;
@@ -77,6 +78,26 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
             {
                 _logger.LogError(ex, "Erro ao excluir empresa com Id {EmpresaId}", command.id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPut("atualizar-limite")]
+        public async Task<ActionResult> AtualizarLimite([FromBody] CalcularLimiteCommand command)
+        {
+            _logger.LogInformation("Recebida requisição para atualizar limite da empresa com Id {EmpresaId}", command.id);
+
+            try
+            {
+                var result = await _mediator.Send(command, HttpContext.RequestAborted);
+
+                _logger.LogInformation("Limite da empresa {EmpresaId} atualizado com sucesso. StatusCode: {StatusCode}", command.id, result.StatusCode);
+
+                return StatusCode((int)result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao atualizar limite da empresa com Id {EmpresaId}", command.id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno ao atualizar limite.");
             }
         }
     }

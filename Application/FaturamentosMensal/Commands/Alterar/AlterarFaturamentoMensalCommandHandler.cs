@@ -1,7 +1,5 @@
-﻿using Antecipacao.Application.NotasFiscal.Commands.Alterar;
-using Antecipacao.Domain.Base;
+﻿using Antecipacao.Domain.Base;
 using Antecipacao.Domain.Interfaces.FaturamentosMensal;
-using Antecipacao.Domain.Interfaces.NotasFiscal;
 using MediatR;
 using System.Net;
 
@@ -27,6 +25,9 @@ namespace Antecipacao.Application.FaturamentosMensal.Commands.Alterar
 
             faturamento.AlterarValor(request.valor);
             faturamento.AlterarPeriodo(request.periodo);
+
+            if (await _repository.PossuiFaturamentoNoPeriodo(request.periodo))
+                return DomainResponse<bool>.Falied("Já existe Faturamento cadastrado no periodo!", HttpStatusCode.BadRequest);
 
             var result = await _repository.Update(faturamento);
             if (!result)

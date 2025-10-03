@@ -19,7 +19,7 @@ namespace Antecipacao.Application.Empresas.Commands.CalcularLimite
             if (request.id == Guid.Empty)
                 return DomainResponse<bool>.Falied("Não foi possivel calcular a novo Limite de crédito!", HttpStatusCode.BadRequest);
 
-            var empresa = await _repository.GetById(request.id);
+            var empresa = await _repository.ObterEmpresaComFaturamento(request.id);
             if (empresa is null)
                 return DomainResponse<bool>.Falied("Não foi possivel calcular a novo Limite de crédito!", HttpStatusCode.BadRequest);
 

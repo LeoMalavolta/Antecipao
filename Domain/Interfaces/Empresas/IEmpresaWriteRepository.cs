@@ -6,6 +6,8 @@ namespace Antecipacao.Domain.Interfaces.Empresas
     {
         Task<Empresa> ObterEmpresaComCarrinho(Guid id);
         Task<decimal> ObterLimite(Guid id);
-        Task<bool> EmpresaJaCadastrada(string cnpj);
+        Task<bool> EmpresaJaCadastrada(string cnpj, Guid id);
+        Task<Empresa> ObterEmpresaComFaturamento(Guid id);
+
     }
 }

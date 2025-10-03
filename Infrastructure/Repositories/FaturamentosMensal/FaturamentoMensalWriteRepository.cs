@@ -44,5 +44,13 @@ namespace Antecipacao.Infrastructure.Repositories.FaturamentosMensal
         {
             return await _context.FaturamentosMensal.FindAsync(id);
         }
+
+        public async Task<bool> PossuiFaturamentoNoPeriodo(DateTime dataFaturamento)
+        {
+            return await _context.FaturamentosMensal
+                .AnyAsync(f => f.Periodo.Month == dataFaturamento.Month
+                            && f.Periodo.Year == dataFaturamento.Year
+                            && f.DataExclusao == null);
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Antecipacao.Application.Empresas.Commands.Alterar
             empresa.AlterarCnpj(request.cnpj);
             empresa.AlterarRamoEmpresa(request.ramo);
 
-            if (await _repository.EmpresaJaCadastrada(request.cnpj))
+            if (await _repository.EmpresaJaCadastrada(request.cnpj, empresa.Id))
                 return DomainResponse<bool>.Falied("O Cnpj já está cadastrada!", HttpStatusCode.BadRequest);
 
             var result = await _repository.Update(empresa);
