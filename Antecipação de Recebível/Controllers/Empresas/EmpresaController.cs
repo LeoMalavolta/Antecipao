@@ -61,7 +61,7 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
             }
         }
 
-        [HttpPut("excluir")]
+        [HttpDelete("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirEmpresaCommand command)
         {
             _logger.LogInformation("Recebida requisição para excluir empresa com Id {EmpresaId}", command.id);

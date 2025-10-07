@@ -20,7 +20,7 @@ namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
             _mediator = mediator;
         }
 
-        [HttpPut("adicionar-nota")]
+        [HttpPost("adicionar-nota")]
         public async Task<ActionResult> AdicionarNota([FromBody] AdicionarNotaCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Recebida requisição para adicionar nota {idNota} no carrinho da empresa nota com Id {idEmpresa}", command.idNota, command.idEmpresa);
@@ -40,7 +40,7 @@ namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
             }
         }
 
-        [HttpPut("remover-nota")]
+        [HttpDelete("remover-nota")]
         public async Task<ActionResult> RemoverNota([FromBody] RemoverNotaCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Recebida requisição para remover nota {idNota} no carrinho da empresa nota com Id {idEmpresa}", command.idNota, command.idEmpresa);

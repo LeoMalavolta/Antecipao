@@ -61,7 +61,7 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
             }
         }
 
-        [HttpPut("excluir")]
+        [HttpDelete("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirFaturamentoMensalCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Recebida requisição para excluir faturamento mensal com Id {idFaturamento}", command.id);

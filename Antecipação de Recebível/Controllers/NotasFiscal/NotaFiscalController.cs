@@ -62,7 +62,7 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         }
 
 
-        [HttpPut("excluir")]
+        [HttpDelete("excluir")]
         public async Task<ActionResult> Excluir([FromBody] ExcluirNotaFiscalCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Recebida requisição para excluir nota fiscal, nota com Id {idNota}", command.id);
