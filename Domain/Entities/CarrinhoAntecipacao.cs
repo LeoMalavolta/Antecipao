@@ -46,6 +46,9 @@ namespace Antecipacao.Domain.Entities
 
         public void RemoverNota(Guid idNota)
         {
+            if (idNota == Guid.Empty)
+                throw new ArgumentException("idNota é obrigatório.");
+
             var nota = _notasFiscais.FirstOrDefault(n => n.Id == idNota);
             if (nota != null)
                 _notasFiscais.Remove(nota);

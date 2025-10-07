@@ -33,6 +33,17 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
 
                 return StatusCode((int)result.StatusCode, result);
             }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, "Erro ao criar nota fiscal {numero} da empresa com Id {idEmpresa}", command.numero, command.idEmpresa);
+                return BadRequest(
+                            new ProblemDetails
+                            {
+                                Title = "Erro de validação",
+                                Detail = ex.Message,
+                                Status = StatusCodes.Status400BadRequest
+                            });
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao criar nota fiscal {numero} da empresa com Id {idEmpresa}", command.numero, command.idEmpresa);
@@ -53,6 +64,17 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
                 _logger.LogInformation("Nota fiscal alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, "Erro ao alterar nota fiscal {numero}, nota com Id {idNota}", command.numero, command.id);
+                return BadRequest(
+                             new ProblemDetails
+                             {
+                                 Title = "Erro de validação",
+                                 Detail = ex.Message,
+                                 Status = StatusCodes.Status400BadRequest
+                             });
             }
             catch (Exception ex)
             {

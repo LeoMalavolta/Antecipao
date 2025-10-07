@@ -34,6 +34,17 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
 
                 return StatusCode((int)result.StatusCode, result);
             }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, "Erro ao criar empresa com CNPJ {Cnpj}", command.cnpj);
+                return BadRequest(
+                            new ProblemDetails
+                            {
+                                Title = "Erro de validação",
+                                Detail = ex.Message,
+                                Status = StatusCodes.Status400BadRequest
+                            });
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao criar empresa com CNPJ {Cnpj}", command.cnpj);
@@ -53,6 +64,17 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
                 _logger.LogInformation("Empresa alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, "Erro ao alterar empresa com CNPJ {Cnpj}", command.cnpj);
+                return BadRequest(
+                            new ProblemDetails
+                            {
+                                Title = "Erro de validação",
+                                Detail = ex.Message,
+                                Status = StatusCodes.Status400BadRequest
+                            });
             }
             catch (Exception ex)
             {

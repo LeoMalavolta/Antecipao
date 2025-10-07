@@ -34,6 +34,17 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
 
                 return StatusCode((int)result.StatusCode, result);
             }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, "Erro ao criar faturamento mensal da empresa com Id {idEmpresa}", command.idEmpresa);
+                return BadRequest(
+                             new ProblemDetails
+                             {
+                                 Title = "Erro de validação",
+                                 Detail = ex.Message,
+                                 Status = StatusCodes.Status400BadRequest
+                             });
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao criar faturamento mensal da empresa com Id {idEmpresa}", command.idEmpresa);
@@ -53,6 +64,17 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
                 _logger.LogInformation("Faturamento mensal alterado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, "Erro ao alterar faturamento mensal da empresa com Id {idFaturamento}", command.id);
+                return BadRequest(
+                             new ProblemDetails
+                             {
+                                 Title = "Erro de validação",
+                                 Detail = ex.Message,
+                                 Status = StatusCodes.Status400BadRequest
+                             });
             }
             catch (Exception ex)
             {

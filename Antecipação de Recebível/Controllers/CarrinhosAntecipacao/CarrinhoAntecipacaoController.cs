@@ -33,9 +33,20 @@ namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
 
                 return StatusCode((int)result.StatusCode, result);
             }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex, "Erro ao adicionar nota {NotaId} no carrinho da empresa nota com Id {EmpresaId}", command.idNota, command.idEmpresa);
+                return BadRequest(
+                            new ProblemDetails
+                            {
+                                Title = "Operação invalida",
+                                Detail = ex.Message,
+                                Status = StatusCodes.Status400BadRequest
+                            });
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao adicionar nota {NotaId} no carrinho da empresa nota com Id {EmpresaId}", command.idNota, command.idEmpresa); 
+                _logger.LogError(ex, "Erro ao adicionar nota {NotaId} no carrinho da empresa nota com Id {EmpresaId}", command.idNota, command.idEmpresa);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -52,6 +63,17 @@ namespace Antecipação_de_Recebível.Controllers.CarrinhosAntecipacao
                 _logger.LogInformation("Nota removida com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
                 return StatusCode((int)result.StatusCode, result);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, "Erro ao remover nota {NotaId} no carrinho da empresa nota com Id {EmpresaId}", command.idNota, command.idEmpresa);
+                return BadRequest(
+                            new ProblemDetails
+                            {
+                                Title = "Erro de validação",
+                                Detail = ex.Message,
+                                Status = StatusCodes.Status400BadRequest
+                            });
             }
             catch (Exception ex)
             {
