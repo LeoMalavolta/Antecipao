@@ -28,9 +28,8 @@ namespace Antecipacao.Infrastructure.Repositories.CarrinhosAntecipacao
 
         public async Task<bool> Delete(Guid id)
         {
-            await _context.CarrinhosAntecipacao.Where(e => e.Id == id)
-                           .ExecuteDeleteAsync();
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.CarrinhosAntecipacao.Where(e => e.Id == id)
+                           .ExecuteDeleteAsync() > 0;
         }
 
         public async Task<CarrinhoAntecipacao> GetById(Guid id)
@@ -42,7 +41,7 @@ namespace Antecipacao.Infrastructure.Repositories.CarrinhosAntecipacao
         {
             return await _context.CarrinhosAntecipacao
                                  .Include(c => c.NotasFiscais)
-                                 .FirstOrDefaultAsync(c => c.Id == id && c.DataAntecipacao == null);
+                                 .FirstOrDefaultAsync(c => c.IdEmpresa == id && c.DataAntecipacao == null);
         }
     }
 }

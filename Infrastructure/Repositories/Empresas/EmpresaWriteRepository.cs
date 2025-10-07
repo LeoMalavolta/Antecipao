@@ -41,9 +41,8 @@ namespace Antecipacao.Infrastructure.Repositories.Empresas
 
         public async Task<bool> Delete(Guid id)
         {
-            await _context.Empresas.Where(e => e.Id == id)
-                                   .ExecuteDeleteAsync();
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.Empresas.Where(e => e.Id == id)
+                                   .ExecuteDeleteAsync() > 0;
         }
 
         public async Task<Empresa> GetById(Guid id)

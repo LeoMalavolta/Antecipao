@@ -35,9 +35,8 @@ namespace Antecipacao.Infrastructure.Repositories.NotasFiscal
 
         public async Task<bool> Delete(Guid id)
         {
-            await _context.NotasFiscais.Where(e => e.Id == id)
-                           .ExecuteDeleteAsync();
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.NotasFiscais.Where(e => e.Id == id)
+                           .ExecuteDeleteAsync() > 0;
         }
 
         public async Task<NotaFiscal> GetById(Guid id)
