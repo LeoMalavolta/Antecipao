@@ -1,5 +1,6 @@
 ﻿using Antecipacao.Domain.Base;
 using Antecipacao.Domain.Enums;
+using Antecipacao.Domain.ValueObjects;
 using System.ComponentModel;
 
 namespace Antecipacao.Domain.Entities
@@ -7,7 +8,7 @@ namespace Antecipacao.Domain.Entities
     public class Empresa : Entity
     {
         public string Nome { get; private set; }
-        public string Cnpj { get; private set; }
+        public CNPJ Cnpj { get; private set; }
         public decimal Limite { get; private set; }
         public RamoEmpresa RamoEmpresa { get; private set; }
 
@@ -41,10 +42,7 @@ namespace Antecipacao.Domain.Entities
 
         public void AlterarCnpj(string cnpj)
         {
-            if (!Utils.ValidarCnpj(cnpj))
-                throw new ArgumentException("CNPJ inválido.");
-
-            Cnpj = Utils.RemoverNaoNumericos(cnpj);
+            Cnpj = new CNPJ(cnpj);
             Atualizar();
         }
 
