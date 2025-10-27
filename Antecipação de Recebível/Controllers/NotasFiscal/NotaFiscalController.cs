@@ -25,30 +25,11 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         {
             _logger.LogInformation("Recebida requisição para criar nota fiscal {numero} da empresa com Id {idEmpresa}", command.numero, command.idEmpresa);
 
-            try
-            {
-                var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-                _logger.LogInformation("Nota fiscal criada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Nota fiscal criada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (ArgumentException ex)
-            {
-                _logger.LogError(ex, "Erro ao criar nota fiscal {numero} da empresa com Id {idEmpresa}", command.numero, command.idEmpresa);
-                return BadRequest(
-                            new ProblemDetails
-                            {
-                                Title = "Erro de validação",
-                                Detail = ex.Message,
-                                Status = StatusCodes.Status400BadRequest
-                            });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao criar nota fiscal {numero} da empresa com Id {idEmpresa}", command.numero, command.idEmpresa);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
 
 
@@ -57,30 +38,11 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         {
             _logger.LogInformation("Recebida requisição para alterar nota fiscal {numero}, nota com Id {idNota}", command.numero, command.id);
 
-            try
-            {
-                var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-                _logger.LogInformation("Nota fiscal alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Nota fiscal alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (ArgumentException ex)
-            {
-                _logger.LogError(ex, "Erro ao alterar nota fiscal {numero}, nota com Id {idNota}", command.numero, command.id);
-                return BadRequest(
-                             new ProblemDetails
-                             {
-                                 Title = "Erro de validação",
-                                 Detail = ex.Message,
-                                 Status = StatusCodes.Status400BadRequest
-                             });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao alterar nota fiscal {numero}, nota com Id {idNota}", command.numero, command.id);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
 
 
@@ -89,19 +51,11 @@ namespace Antecipação_de_Recebível.Controllers.NotasFiscal
         {
             _logger.LogInformation("Recebida requisição para excluir nota fiscal, nota com Id {idNota}", command.id);
 
-            try
-            {
-                var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-                _logger.LogInformation("Nota fiscal excluida com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Nota fiscal excluida com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao excluir nota fiscal, nota com Id {idNota}", command.id);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
     }
 }

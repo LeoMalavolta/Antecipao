@@ -1,4 +1,6 @@
 ﻿
+using Antecipacao.Domain.Base;
+
 namespace Antecipacao.Domain.ValueObjects
 {
     public class CNPJ
@@ -10,12 +12,12 @@ namespace Antecipacao.Domain.ValueObjects
         public CNPJ(string numero)
         {
             if (string.IsNullOrWhiteSpace(numero))
-                throw new ArgumentException("CNPJ não pode ser vazio.");
+                throw new DomainException("CNPJ não pode ser vazio.");
 
             numero = LimparFormato(numero);
 
             if (!EhValido(numero))
-                throw new ArgumentException("CNPJ inválido.");
+                throw new DomainException("CNPJ inválido.");
 
             Numero = numero;
         }

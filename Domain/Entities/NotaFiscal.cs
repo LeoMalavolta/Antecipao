@@ -30,7 +30,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarEmpresa(Guid idEmpresa)
         {
             if (idEmpresa == Guid.Empty)
-                throw new ArgumentException("Empresa é obrigatório.");
+                throw new DomainException("Empresa é obrigatório.");
 
             IdEmpresa = idEmpresa;
         }
@@ -38,7 +38,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarCarrinho(Guid? idCarrinho)
         {
             if (idCarrinho == Guid.Empty)
-                throw new ArgumentException("IdCarrinho empty.");
+                throw new DomainException("IdCarrinho empty.");
 
             IdCarrinho = idCarrinho;
         }
@@ -46,7 +46,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarNumero(string numero)
         {
             if (string.IsNullOrWhiteSpace(numero))
-                throw new ArgumentException("Número da nota fiscal é obrigatório.");
+                throw new DomainException("Número da nota fiscal é obrigatório.");
 
             Numero = numero;
             Atualizar();
@@ -55,7 +55,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarValorBruto(decimal valor)
         {
             if (valor <= 0)
-                throw new ArgumentException("Valor da nota fiscal deve ser maior que zero.");
+                throw new DomainException("Valor da nota fiscal deve ser maior que zero.");
 
             ValorBruto = valor;
             Atualizar();
@@ -64,7 +64,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarValorLiquido(decimal valor)
         {
             if (valor <= 0)
-                throw new ArgumentException("Valor da nota fiscal deve ser maior que zero.");
+                throw new DomainException("Valor da nota fiscal deve ser maior que zero.");
 
             ValorLiquido = valor;
             Atualizar();
@@ -73,7 +73,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarDataVencimento(DateTime dataVencimento)
         {
             if (dataVencimento < DateTime.UtcNow.Date)
-                throw new ArgumentException("Data de vencimento não pode ser no passado.");
+                throw new DomainException("Data de vencimento não pode ser no passado.");
 
             DataVencimento = dataVencimento;
             Atualizar();

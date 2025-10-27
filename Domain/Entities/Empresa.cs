@@ -2,13 +2,14 @@
 using Antecipacao.Domain.Enums;
 using Antecipacao.Domain.ValueObjects;
 using System.ComponentModel;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Antecipacao.Domain.Entities
 {
     public class Empresa : Entity
     {
         public string Nome { get; private set; }
-        public CNPJ Cnpj { get; private set; }
+        public string Cnpj { get; private set; }
         public decimal Limite { get; private set; }
         public RamoEmpresa RamoEmpresa { get; private set; }
 
@@ -34,7 +35,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarNome(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
-                throw new ArgumentException("Nome da empresa é obrigatório.");
+                throw new DomainException("Nome da empresa é obrigatório.");
 
             Nome = nome;
             Atualizar();
@@ -42,14 +43,20 @@ namespace Antecipacao.Domain.Entities
 
         public void AlterarCnpj(string cnpj)
         {
-            Cnpj = new CNPJ(cnpj);
+            if (string.IsNullOrWhiteSpace(cnpj))
+                throw new DomainException("CNPJ não pode ser vazio.");
+
+            if (!Utils.ValidarCnpj(cnpj))
+                throw new DomainException("CNPJ inválido.");
+
+            Cnpj = Utils.RemoverNaoNumericos(cnpj);
             Atualizar();
         }
 
         public void AlterarRamoEmpresa(int ramoEmpresa)
         {
             if (!Enum.IsDefined(typeof(RamoEmpresa), ramoEmpresa))
-                throw new ArgumentException("Ramo da empresa inválido.");
+                throw new DomainException("Ramo da empresa inválido.");
 
             RamoEmpresa = (RamoEmpresa)ramoEmpresa;
             Atualizar();
@@ -70,7 +77,7 @@ namespace Antecipacao.Domain.Entities
             else if (RamoEmpresa == RamoEmpresa.Produtos)
                 Limite = CalcularLimiteProdutos(mediaFaturamento);
             else
-                throw new ArgumentException("Ramo da empresa inválido.");
+                throw new DomainException("Ramo da empresa inválido.");
 
             Atualizar();
         }

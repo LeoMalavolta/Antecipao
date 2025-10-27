@@ -53,7 +53,7 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.HasIndex("IdEmpresa");
 
-                    b.ToTable("CarrinhosAntecipacao");
+                    b.ToTable("CarrinhosAntecipacao", (string)null);
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.Empresa", b =>
@@ -92,7 +92,7 @@ namespace Antecipacao.Infrastructure.Data.Migrations
                     b.HasIndex("Cnpj")
                         .IsUnique();
 
-                    b.ToTable("Empresas");
+                    b.ToTable("Empresas", (string)null);
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.FaturamentoMensal", b =>
@@ -123,7 +123,7 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.HasIndex("IdEmpresa");
 
-                    b.ToTable("FaturamentosMensal");
+                    b.ToTable("FaturamentosMensal", (string)null);
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.NotaFiscal", b =>
@@ -166,7 +166,7 @@ namespace Antecipacao.Infrastructure.Data.Migrations
 
                     b.HasIndex("IdEmpresa");
 
-                    b.ToTable("NotasFiscais");
+                    b.ToTable("NotasFiscais", (string)null);
                 });
 
             modelBuilder.Entity("Antecipacao.Domain.Entities.CarrinhoAntecipacao", b =>

@@ -24,7 +24,7 @@ namespace Antecipacao.Domain.Entities
         private void AlterarEmpresa(Guid empresaId)
         {
             if (empresaId == Guid.Empty)
-                throw new ArgumentException("Empresa é obrigatório.");
+                throw new DomainException("Empresa é obrigatório.");
 
             IdEmpresa = empresaId;
         }
@@ -47,7 +47,7 @@ namespace Antecipacao.Domain.Entities
         public void RemoverNota(Guid idNota)
         {
             if (idNota == Guid.Empty)
-                throw new ArgumentException("idNota é obrigatório.");
+                throw new DomainException("idNota é obrigatório.");
 
             var nota = _notasFiscais.FirstOrDefault(n => n.Id == idNota);
             if (nota != null)

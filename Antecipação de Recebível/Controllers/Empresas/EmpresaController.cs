@@ -22,34 +22,15 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
         }
 
         [HttpPost]
-        public async Task<ActionResult> Criar([FromBody] CriarEmpresaCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Criar([FromBody] CriarEmpresaCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Recebida requisição para criar empresa com CNPJ {Cnpj}", command.cnpj);
 
-            try
-            {
-                var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-                _logger.LogInformation("Empresa criada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Empresa criada com sucesso");
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (ArgumentException ex)
-            {
-                _logger.LogError(ex, "Erro ao criar empresa com CNPJ {Cnpj}", command.cnpj);
-                return BadRequest(
-                            new ProblemDetails
-                            {
-                                Title = "Erro de validação",
-                                Detail = ex.Message,
-                                Status = StatusCodes.Status400BadRequest
-                            });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao criar empresa com CNPJ {Cnpj}", command.cnpj);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
 
         [HttpPut]
@@ -57,30 +38,11 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
         {
             _logger.LogInformation("Recebida requisição para alterar empresa com CNPJ {Cnpj}", command.cnpj);
 
-            try
-            {
-                var result = await _mediator.Send(command, HttpContext.RequestAborted);
+            var result = await _mediator.Send(command, HttpContext.RequestAborted);
 
-                _logger.LogInformation("Empresa alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Empresa alterada com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (ArgumentException ex)
-            {
-                _logger.LogError(ex, "Erro ao alterar empresa com CNPJ {Cnpj}", command.cnpj);
-                return BadRequest(
-                            new ProblemDetails
-                            {
-                                Title = "Erro de validação",
-                                Detail = ex.Message,
-                                Status = StatusCodes.Status400BadRequest
-                            });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao alterar empresa com CNPJ {Cnpj}", command.cnpj);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("excluir")]
@@ -88,19 +50,11 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
         {
             _logger.LogInformation("Recebida requisição para excluir empresa com Id {EmpresaId}", command.id);
 
-            try
-            {
-                var result = await _mediator.Send(command, HttpContext.RequestAborted);
+            var result = await _mediator.Send(command, HttpContext.RequestAborted);
 
-                _logger.LogInformation("Empresa {EmpresaId} excluída com StatusCode {StatusCode}", command.id, result.StatusCode);
+            _logger.LogInformation("Empresa {EmpresaId} excluída com StatusCode {StatusCode}", command.id, result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao excluir empresa com Id {EmpresaId}", command.id);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
 
         [HttpPut("atualizar-limite")]
@@ -108,19 +62,11 @@ namespace Antecipação_de_Recebível.Controllers.Empresas
         {
             _logger.LogInformation("Recebida requisição para atualizar limite da empresa com Id {EmpresaId}", command.id);
 
-            try
-            {
-                var result = await _mediator.Send(command, HttpContext.RequestAborted);
+            var result = await _mediator.Send(command, HttpContext.RequestAborted);
 
-                _logger.LogInformation("Limite da empresa {EmpresaId} atualizado com sucesso. StatusCode: {StatusCode}", command.id, result.StatusCode);
+            _logger.LogInformation("Limite da empresa {EmpresaId} atualizado com sucesso. StatusCode: {StatusCode}", command.id, result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao atualizar limite da empresa com Id {EmpresaId}", command.id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno ao atualizar limite.");
-            }
+            return Ok(result);
         }
     }
 }

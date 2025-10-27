@@ -1,38 +1,26 @@
-using Antecipacao.Application.Empresas.Commands.Criar;
-using Antecipacao.Infrastructure;
-using Antecipacao.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Antecipação_de_Recebível.Setup;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<AntecipacaoDeRecebiveisDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
-
 builder.Services.AddControllers();
-builder.Services.AddServices();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddApiConfig(builder.Configuration);
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(CriarEmpresaCommand).Assembly));
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler(); 
+
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

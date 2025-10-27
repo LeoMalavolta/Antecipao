@@ -22,7 +22,7 @@ namespace Antecipacao.Domain.Entities
         private void AlterarEmpresa(Guid idEmpresa)
         {
             if (idEmpresa == Guid.Empty)
-                throw new ArgumentException("IdEmpresa é obrigatório.");
+                throw new DomainException("IdEmpresa é obrigatório.");
 
             IdEmpresa = idEmpresa;
         }
@@ -30,7 +30,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarValor(decimal valor)
         {
             if (valor < 0)
-                throw new ArgumentException("O valor do faturamento não pode ser negativo.");
+                throw new DomainException("O valor do faturamento não pode ser negativo.");
 
             Valor = valor;
         }
@@ -38,7 +38,7 @@ namespace Antecipacao.Domain.Entities
         public void AlterarPeriodo(DateTime periodo)
         {
             if (periodo > DateTime.UtcNow)
-                throw new ArgumentException("Periodo inválido.");
+                throw new DomainException("Periodo inválido.");
 
             Periodo = periodo;
         }

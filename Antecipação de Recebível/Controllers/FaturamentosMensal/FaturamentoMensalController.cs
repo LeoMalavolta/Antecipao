@@ -26,30 +26,11 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         {
             _logger.LogInformation("Recebida requisição para criar faturamento mensal da empresa com Id {idEmpresa}", command.idEmpresa);
 
-            try
-            {
-                var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-                _logger.LogInformation("Faturamento mensal criado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Faturamento mensal criado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (ArgumentException ex)
-            {
-                _logger.LogError(ex, "Erro ao criar faturamento mensal da empresa com Id {idEmpresa}", command.idEmpresa);
-                return BadRequest(
-                             new ProblemDetails
-                             {
-                                 Title = "Erro de validação",
-                                 Detail = ex.Message,
-                                 Status = StatusCodes.Status400BadRequest
-                             });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao criar faturamento mensal da empresa com Id {idEmpresa}", command.idEmpresa);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
 
         [HttpPut]
@@ -57,30 +38,11 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         {
             _logger.LogInformation("Recebida requisição para criar faturamento mensal com Id {idFaturamento}", command.id);
 
-            try
-            {
-                var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-                _logger.LogInformation("Faturamento mensal alterado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Faturamento mensal alterado com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (ArgumentException ex)
-            {
-                _logger.LogError(ex, "Erro ao alterar faturamento mensal da empresa com Id {idFaturamento}", command.id);
-                return BadRequest(
-                             new ProblemDetails
-                             {
-                                 Title = "Erro de validação",
-                                 Detail = ex.Message,
-                                 Status = StatusCodes.Status400BadRequest
-                             });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao alterar faturamento mensal da empresa com Id {idFaturamento}", command.id);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
 
         [HttpDelete("excluir")]
@@ -88,19 +50,11 @@ namespace Antecipação_de_Recebível.Controllers.FaturamentosMensal
         {
             _logger.LogInformation("Recebida requisição para excluir faturamento mensal com Id {idFaturamento}", command.id);
 
-            try
-            {
-                var result = await _mediator.Send(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-                _logger.LogInformation("Faturamento mensal excluido com sucesso. StatusCode: {StatusCode}", result.StatusCode);
+            _logger.LogInformation("Faturamento mensal excluido com sucesso. StatusCode: {StatusCode}", result.StatusCode);
 
-                return StatusCode((int)result.StatusCode, result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao excluir faturamento mensal da empresa com Id {idFaturamento}", command.id);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(result);
         }
     }
 }
