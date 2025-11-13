@@ -1,4 +1,5 @@
 ﻿using Antecipacao.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Antecipação_de_Recebível.Setup
 {

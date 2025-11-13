@@ -1,10 +1,9 @@
-﻿using Antecipacao.Domain.Base;
+﻿using Antecipacao.Domain;
 using Antecipacao.Domain.Enums;
-using Antecipacao.Domain.ValueObjects;
-using System.ComponentModel;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using BuildingBlocks.Core.Domain.Entities;
+using BuildingBlocks.Exceptions.Domain;
 
-namespace Antecipacao.Domain.Entities
+namespace BuildingBlocks.Core.Entities
 {
     public class Empresa : Entity
     {

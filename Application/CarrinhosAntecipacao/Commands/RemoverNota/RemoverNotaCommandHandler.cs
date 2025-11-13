@@ -1,9 +1,7 @@
-﻿using Antecipacao.Application.CarrinhosAntecipacao.Commands.AdicionarNota;
-using Antecipacao.Domain.Base;
-using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.Interfaces.CarrinhosAntecipacao;
+﻿using Antecipacao.Domain.Interfaces.CarrinhosAntecipacao;
 using Antecipacao.Domain.Interfaces.Empresas;
 using Antecipacao.Domain.Interfaces.NotasFiscal;
+using BuildingBlocks.Core.Domain;
 using MediatR;
 using System.Net;
 

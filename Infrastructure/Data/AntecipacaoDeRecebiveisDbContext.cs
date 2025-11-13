@@ -1,5 +1,5 @@
-﻿using Antecipacao.Domain.Entities;
-using Antecipacao.Infrastructure.Data.OnModelCreating;
+﻿using Antecipacao.Infrastructure.Data.OnModelCreating;
+using BuildingBlocks.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Antecipacao.Infrastructure.Data

@@ -1,8 +1,6 @@
-﻿using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.ValueObjects;
+﻿using BuildingBlocks.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 
 namespace Antecipacao.Infrastructure.Data.OnModelCreating

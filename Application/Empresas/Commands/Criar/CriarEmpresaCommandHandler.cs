@@ -1,6 +1,6 @@
-﻿using Antecipacao.Domain.Base;
-using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.Interfaces.Empresas;
+﻿using Antecipacao.Domain.Interfaces.Empresas;
+using BuildingBlocks.Core.Domain;
+using BuildingBlocks.Core.Entities;
 using MediatR;
 using System.Net;
 

@@ -1,6 +1,7 @@
-﻿using Antecipacao.Domain.Base;
+﻿using BuildingBlocks.Core.Domain.Entities;
+using BuildingBlocks.Exceptions.Domain;
 
-namespace Antecipacao.Domain.Entities
+namespace BuildingBlocks.Core.Entities
 {
     public class CarrinhoAntecipacao : Entity
     {

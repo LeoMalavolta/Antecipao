@@ -1,7 +1,7 @@
 ﻿using Antecipacao.Domain;
-using Antecipacao.Domain.Entities;
 using Antecipacao.Domain.Interfaces.Empresas;
 using Antecipacao.Infrastructure.Data;
+using BuildingBlocks.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

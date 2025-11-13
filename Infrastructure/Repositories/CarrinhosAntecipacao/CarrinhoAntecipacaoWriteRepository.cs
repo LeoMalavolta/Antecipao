@@ -1,6 +1,6 @@
-﻿using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.Interfaces.CarrinhosAntecipacao;
+﻿using Antecipacao.Domain.Interfaces.CarrinhosAntecipacao;
 using Antecipacao.Infrastructure.Data;
+using BuildingBlocks.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Antecipacao.Infrastructure.Repositories.CarrinhosAntecipacao

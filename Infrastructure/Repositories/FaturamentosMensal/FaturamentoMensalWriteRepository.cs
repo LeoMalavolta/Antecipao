@@ -1,6 +1,6 @@
-﻿using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.Interfaces.FaturamentosMensal;
+﻿using Antecipacao.Domain.Interfaces.FaturamentosMensal;
 using Antecipacao.Infrastructure.Data;
+using BuildingBlocks.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Antecipacao.Infrastructure.Repositories.FaturamentosMensal

@@ -1,6 +1,4 @@
-﻿using Antecipacao.Application.Empresas.Commands.Criar;
-using Antecipacao.Infrastructure;
-using Antecipacao.Infrastructure.Data;
+﻿using Antecipacao.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Antecipação_de_Recebível.Setup
@@ -14,7 +12,7 @@ namespace Antecipação_de_Recebível.Setup
             services.AddDbContext<AntecipacaoDeRecebiveisDbContext>(options =>
                      options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddExceptionHandler<GlobalExcepetionHandler>();
+            services.AddExceptionHandler<GlobalExceptionHandler>();
 
             return services;
         }

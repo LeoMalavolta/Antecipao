@@ -1,4 +1,4 @@
-﻿using Antecipacao.Domain.Base;
+﻿using BuildingBlocks.Core.Domain.Entities;
 
 namespace Antecipacao.Domain.Interfaces
 {

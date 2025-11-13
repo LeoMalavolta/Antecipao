@@ -1,4 +1,4 @@
-﻿using Antecipacao.Domain.Base;
+﻿using BuildingBlocks.Core.Domain;
 using MediatR;
 
 namespace Antecipacao.Application.NotasFiscal.Commands.Criar

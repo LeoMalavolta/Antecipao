@@ -1,6 +1,6 @@
 ﻿
 
-using Antecipacao.Domain.Entities;
+using BuildingBlocks.Core.Entities;
 
 namespace Antecipacao.Domain.Interfaces.NotasFiscal
 {

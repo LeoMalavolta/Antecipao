@@ -1,10 +1,4 @@
-﻿using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.Interfaces.Empresas;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Antecipacao.Domain.Interfaces.Empresas;
 
 namespace Antecipacao.Infrastructure.Repositories.Empresas
 {

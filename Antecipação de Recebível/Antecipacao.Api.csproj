@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Antecipacao.Application.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\BuildingBlocks.csproj" />
     <ProjectReference Include="..\Domain\Antecipacao.Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\Antecipacao.Infrastructure.csproj" />
   </ItemGroup>

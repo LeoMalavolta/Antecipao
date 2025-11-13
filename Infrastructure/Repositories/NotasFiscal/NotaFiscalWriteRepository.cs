@@ -1,6 +1,6 @@
-﻿using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.Interfaces.NotasFiscal;
+﻿using Antecipacao.Domain.Interfaces.NotasFiscal;
 using Antecipacao.Infrastructure.Data;
+using BuildingBlocks.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Antecipacao.Infrastructure.Repositories.NotasFiscal

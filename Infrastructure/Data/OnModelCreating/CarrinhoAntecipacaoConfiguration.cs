@@ -1,4 +1,4 @@
-﻿using Antecipacao.Domain.Entities;
+﻿using BuildingBlocks.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

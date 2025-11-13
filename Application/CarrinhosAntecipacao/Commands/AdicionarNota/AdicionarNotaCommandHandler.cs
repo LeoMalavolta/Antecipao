@@ -1,8 +1,8 @@
-﻿using Antecipacao.Domain.Base;
-using Antecipacao.Domain.Entities;
-using Antecipacao.Domain.Interfaces.CarrinhosAntecipacao;
+﻿using Antecipacao.Domain.Interfaces.CarrinhosAntecipacao;
 using Antecipacao.Domain.Interfaces.Empresas;
 using Antecipacao.Domain.Interfaces.NotasFiscal;
+using BuildingBlocks.Core.Domain;
+using BuildingBlocks.Core.Entities;
 using MediatR;
 using System.Net;
 

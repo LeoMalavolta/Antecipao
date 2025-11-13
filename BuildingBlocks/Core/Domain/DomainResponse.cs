@@ -1,8 +1,6 @@
-﻿
+﻿using System.Net;
 
-using System.Net;
-
-namespace Antecipacao.Domain.Base
+namespace BuildingBlocks.Core.Domain
 {
     public class DomainResponse<T>
     {

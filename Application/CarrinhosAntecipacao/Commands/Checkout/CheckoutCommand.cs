@@ -1,5 +1,5 @@
 ﻿using Antecipacao.Application.CarrinhosAntecipacao.Dto;
-using Antecipacao.Domain.Base;
+using BuildingBlocks.Core.Domain;
 using MediatR;
 
 namespace Antecipacao.Application.CarrinhosAntecipacao.Commands.Checkout

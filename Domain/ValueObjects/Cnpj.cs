@@ -1,5 +1,6 @@
 ﻿
-using Antecipacao.Domain.Base;
+
+using BuildingBlocks.Exceptions.Domain;
 
 namespace Antecipacao.Domain.ValueObjects
 {

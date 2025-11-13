@@ -1,4 +1,4 @@
-﻿namespace Antecipacao.Domain.Base
+﻿namespace BuildingBlocks.Core.Domain.Entities
 {
     public abstract class Entity
     {

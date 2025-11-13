@@ -1,5 +1,5 @@
-﻿using Antecipacao.Domain.Base;
-using Antecipacao.Domain.Interfaces.NotasFiscal;
+﻿using Antecipacao.Domain.Interfaces.NotasFiscal;
+using BuildingBlocks.Core.Domain;
 using MediatR;
 using System.Net;
 

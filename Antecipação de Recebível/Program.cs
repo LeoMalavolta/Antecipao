@@ -1,13 +1,9 @@
+using Antecipação_de_Recebível.Extensions;
 using Antecipação_de_Recebível.Setup;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddApiConfig(builder.Configuration);
-
-builder.Services.AddProblemDetails();
+builder.AddSharedInfrastructure();
 
 var app = builder.Build();
 

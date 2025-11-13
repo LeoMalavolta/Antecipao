@@ -1,5 +1,5 @@
-﻿using Antecipacao.Domain.Base;
-using Antecipacao.Domain.Interfaces.FaturamentosMensal;
+﻿using Antecipacao.Domain.Interfaces.FaturamentosMensal;
+using BuildingBlocks.Core.Domain;
 using MediatR;
 using System.Net;
 
